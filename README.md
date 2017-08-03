@@ -8,3 +8,8 @@
 ## 使用方法
 "获取远程Hosts"→"更新Hosts"
 将本地Hosts与远程Hosts同步
+
+## Hosts地址
+https://raw.githubusercontent.com/racaljk/hosts/master/hosts
+
+https://raw.githubusercontent.com/HMBSbige/Text_Translation/master/hosts
