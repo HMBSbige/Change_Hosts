@@ -17,9 +17,10 @@ namespace Change_Hosts
         {
             try
             {
-                var hosts = textBox2.Text + '\n' + textBox3.Text;
+                var hosts = textBox3.Text;
 
-                File.WriteAllText(LocalHostsAddress, hosts, Encoding.UTF8);
+                System.Text.UTF8Encoding utf8 = new System.Text.UTF8Encoding(false);
+                File.WriteAllText(LocalHostsAddress, hosts, utf8);
 
                 toolStripStatusLabel1.Text=@"修改Hosts成功！";
             }

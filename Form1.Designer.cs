@@ -50,7 +50,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(81, 23);
             this.button1.TabIndex = 0;
-            this.button1.Text = "更改Hosts";
+            this.button1.Text = "更新Hosts";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -60,9 +60,9 @@
             this.label1.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(8, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(238, 40);
+            this.label1.Size = new System.Drawing.Size(205, 40);
             this.label1.TabIndex = 3;
-            this.label1.Text = "获取最新可用的Hosts文件\r\n加速访问Google、AutoDraw等网站";
+            this.label1.Text = "\"获取远程Hosts\"→\"更新Hosts\"\r\n将本地Hosts与远程Hosts同步\r\n";
             // 
             // textBox1
             // 
@@ -70,7 +70,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(411, 21);
             this.textBox1.TabIndex = 4;
-            this.textBox1.Text = "https://raw.githubusercontent.com/racaljk/hosts/master/hosts";
+            this.textBox1.Text = "https://raw.githubusercontent.com/HMBSbige/Text_Translation/master/hosts\r\n";
             this.textBox1.WordWrap = false;
             // 
             // label2
@@ -120,7 +120,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(100, 23);
             this.button3.TabIndex = 10;
-            this.button3.Text = "获取本地Hosts";
+            this.button3.Text = "查看本地Hosts";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
