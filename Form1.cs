@@ -60,7 +60,7 @@ namespace Change_Hosts
         {
             toolStripStatusLabel1.Text = @"正在获取...";
             textBox3.Text = "";
-            var hostsAddress = textBox1.Text;
+            var hostsAddress = comboBox1.Text;
             var add = GetGeneralContent(hostsAddress);
             if (add != "")
             {
