@@ -9,11 +9,12 @@ namespace Change_Hosts
     public partial class Form1 : Form
     {
         private const string LocalHostsAddress = @"C:\Windows\System32\drivers\etc\hosts";
+
         public Form1()
         {
             InitializeComponent();
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             try
             {
@@ -21,6 +22,8 @@ namespace Change_Hosts
 
                 System.Text.UTF8Encoding utf8 = new System.Text.UTF8Encoding(false);
                 File.WriteAllText(LocalHostsAddress, hosts, utf8);
+
+                Get_local_hosts();
 
                 toolStripStatusLabel1.Text=@"修改Hosts成功！";
             }
@@ -53,7 +56,7 @@ namespace Change_Hosts
             return strMsg;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             toolStripStatusLabel1.Text = @"正在获取...";
             textBox3.Text = "";
@@ -78,19 +81,30 @@ namespace Change_Hosts
                 toolStripStatusLabel1.Text = @"获取远程Hosts失败！请检查网络连接和HOSTS地址是否正确";
             }
         }
-
-        private void button3_Click(object sender, EventArgs e)
+        void Get_local_hosts()
         {
             try
             {
-                textBox2.Text = File.ReadAllText(LocalHostsAddress, Encoding.UTF8);
+                textBox2.Text = File.ReadAllText(path: LocalHostsAddress, encoding: Encoding.UTF8);
                 toolStripStatusLabel1.Text = @"获取本地Hosts成功！";
             }
             catch
             {
                 toolStripStatusLabel1.Text = @"获取本地Hosts失败！请检查是否有权限读取Hosts" + @"(" + LocalHostsAddress + @")";
             }
-                       
+        }
+        private void Button3_Click(object sender, EventArgs e) => Get_local_hosts();
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            ToolTip toolTip_button = new ToolTip
+            {
+                ShowAlways = true
+            };
+            toolTip_button.ShowAlways = true;
+            toolTip_button.SetToolTip(button1, @"更新本机Hosts");
+            toolTip_button.SetToolTip(button2, @"从远程获取Hosts");
+            toolTip_button.SetToolTip(button3, @"查看本机Hosts");
         }
     }
 }
