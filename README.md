@@ -3,11 +3,10 @@
 手动更新Hosts文件
 
 ## 预览
-![](https://raw.githubusercontent.com/HMBSbige/Change_Hosts/master/pic/pic2.1.png)
+![](https://raw.githubusercontent.com/HMBSbige/Change_Hosts/master/pic/pic2.2.png)
 
 ## 使用方法
-"获取远程Hosts"→"更新Hosts"
-将本地Hosts与远程Hosts同步
+选择远程Hosts地址（或者自定义）,然后按按钮就行了...
 
 ## Hosts地址
 https://raw.githubusercontent.com/racaljk/hosts/master/hosts
