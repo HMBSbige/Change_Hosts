@@ -67,14 +67,18 @@ namespace Change_Hosts
                 toolStripStatusLabel1.Text = @"获取远程Hosts成功！";               
                 textBox3.Text = add;
 
-                var str2 = add;
-                const string strt1 = "# Last updated: ";
-                const string strt2 = "# This work is licensed";
-
-                if (hostsAddress != "https://raw.githubusercontent.com/racaljk/hosts/master/hosts") return;
-                var hostDate = str2.Substring(str2.IndexOf(strt1, StringComparison.Ordinal) + strt1.Length,
-                    str2.IndexOf(strt2, StringComparison.Ordinal) - (str2.IndexOf(strt1, StringComparison.Ordinal) + strt1.Length)-4);
-                toolStripStatusLabel1.Text = @"Hosts版本：" + hostDate;
+                string[] ContentLines = add.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                const string str1 = @"# Last updated: ";
+                try
+                {
+                    var str2 = ContentLines[2].Substring(0, str1.Length);
+                    if (str2 == str1)
+                        toolStripStatusLabel1.Text = @"Hosts更新于：" + ContentLines[2].Substring(str1.Length);
+                }
+                catch
+                {
+                    return;
+                }               
             }
             else
             {
