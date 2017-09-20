@@ -125,7 +125,9 @@
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "https://raw.githubusercontent.com/HMBSbige/Text_Translation/master/hosts",
-            "https://raw.githubusercontent.com/racaljk/hosts/master/hosts"});
+            "https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/hosts",
+            "https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/hosts-comp" +
+                "act"});
             this.comboBox1.Location = new System.Drawing.Point(15, 28);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(1026, 20);

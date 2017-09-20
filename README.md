@@ -9,6 +9,8 @@
 选择远程Hosts地址（或者自定义）,然后按按钮就行了...
 
 ## Hosts地址
-https://raw.githubusercontent.com/racaljk/hosts/master/hosts
+https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/hosts
+
+https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/hosts-compact
 
 https://raw.githubusercontent.com/HMBSbige/Text_Translation/master/hosts
