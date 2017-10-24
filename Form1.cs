@@ -13,6 +13,8 @@ namespace Change_Hosts
         private string _hostsAddress=@"";
         private bool _isreceiving;
 
+        private Thread _t1;
+
         private delegate void Textcallback(string str);
         private Textcallback _toolStripStatusLabel1TextCallback;
         private Textcallback _textBox3Textcallback;
@@ -77,8 +79,7 @@ namespace Change_Hosts
            
             var add = GetGeneralContent(_hostsAddress);
             if (add != "")
-            {
-                _toolStripStatusLabel1TextCallback?.Invoke(@"获取远程Hosts成功！");
+            {   
                 textBox3?.Invoke(_textBox3Textcallback, add);
 
                 string[] contentLines = add.Split(new []{ "\r\n" }, StringSplitOptions.None);
@@ -88,13 +89,13 @@ namespace Change_Hosts
                     var str2 = contentLines[2].Substring(0, str1.Length);
                     if (str2 == str1)
                     {
-                        _toolStripStatusLabel1TextCallback?.Invoke(@"Hosts更新于：" + contentLines[2].Substring(str1.Length));
+                        _toolStripStatusLabel1TextCallback?.Invoke(@"获取远程Hosts成功！更新于：" + contentLines[2].Substring(str1.Length));
                     }
 
                 }
                 catch
                 {
-                    // ignored
+                    _toolStripStatusLabel1TextCallback?.Invoke(@"获取远程Hosts成功！");
                 }
             }
             else
@@ -109,15 +110,21 @@ namespace Change_Hosts
         {
             if (!_isreceiving)
             {
-                Thread t1 = new Thread(Get_Hosts)
+                _t1 = new Thread(Get_Hosts)
                 {
                     IsBackground = true
                 };
-                t1.Start();
+                _t1.Start();
             }
             else
             {
-                toolStripStatusLabel1.Text = @"正在获取中...";
+                _t1.Abort();
+                toolStripStatusLabel1.Text = @"已终止获取远程Hosts";
+                _t1 = new Thread(Get_Hosts)
+                {
+                    IsBackground = true
+                };
+                _t1.Start();   
             }
         }
 
