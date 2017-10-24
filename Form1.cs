@@ -3,12 +3,22 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Change_Hosts
 {
     public partial class Form1 : Form
     {
         private const string LocalHostsAddress = @"C:\Windows\System32\drivers\etc\hosts";
+        private string _hostsAddress=@"";
+        private bool _isreceiving;
+
+        private delegate void Textcallback(string str);
+        private Textcallback _toolStripStatusLabel1TextCallback;
+        private Textcallback _textBox3Textcallback;
+
+        private delegate void GetTextcallback();
+        private GetTextcallback _comboBox1TextCallBack;
 
         public Form1()
         {
@@ -56,36 +66,62 @@ namespace Change_Hosts
             return strMsg;
         }
 
-        private void Button2_Click(object sender, EventArgs e)
+        private void Get_Hosts()
         {
-            toolStripStatusLabel1.Text = @"正在获取...";
-            textBox3.Text = "";
-            var hostsAddress = comboBox1.Text;
-            var add = GetGeneralContent(hostsAddress);
+            _isreceiving = true;
+            _toolStripStatusLabel1TextCallback?.Invoke(@"正在获取...");
+            textBox3?.Invoke(_textBox3Textcallback, @"");
+
+            
+            comboBox1?.Invoke(_comboBox1TextCallBack);
+           
+            var add = GetGeneralContent(_hostsAddress);
             if (add != "")
             {
-                toolStripStatusLabel1.Text = @"获取远程Hosts成功！";               
-                textBox3.Text = add;
+                _toolStripStatusLabel1TextCallback?.Invoke(@"获取远程Hosts成功！");
+                textBox3?.Invoke(_textBox3Textcallback, add);
 
-                string[] ContentLines = add.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                string[] contentLines = add.Split(new []{ "\r\n" }, StringSplitOptions.None);
                 const string str1 = @"# Last updated: ";
                 try
                 {
-                    var str2 = ContentLines[2].Substring(0, str1.Length);
+                    var str2 = contentLines[2].Substring(0, str1.Length);
                     if (str2 == str1)
-                        toolStripStatusLabel1.Text = @"Hosts更新于：" + ContentLines[2].Substring(str1.Length);
+                    {
+                        _toolStripStatusLabel1TextCallback?.Invoke(@"Hosts更新于：" + contentLines[2].Substring(str1.Length));
+                    }
+
                 }
                 catch
                 {
-                    return;
-                }               
+                    // ignored
+                }
             }
             else
             {
-                toolStripStatusLabel1.Text = @"获取远程Hosts失败！请检查网络连接和HOSTS地址是否正确";
+                _toolStripStatusLabel1TextCallback?.Invoke(@"获取远程Hosts失败！请检查网络连接和HOSTS地址是否正确");
+                textBox3?.Invoke(_textBox3Textcallback, _hostsAddress);
+            }
+            _isreceiving = false;
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            if (!_isreceiving)
+            {
+                Thread t1 = new Thread(Get_Hosts)
+                {
+                    IsBackground = true
+                };
+                t1.Start();
+            }
+            else
+            {
+                toolStripStatusLabel1.Text = @"正在获取中...";
             }
         }
-        void Get_local_hosts()
+
+        private void Get_local_hosts()
         {
             try
             {
@@ -97,18 +133,37 @@ namespace Change_Hosts
                 toolStripStatusLabel1.Text = @"获取本地Hosts失败！请检查是否有权限读取Hosts" + @"(" + LocalHostsAddress + @")";
             }
         }
+
         private void Button3_Click(object sender, EventArgs e) => Get_local_hosts();
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ToolTip toolTip_button = new ToolTip
+            ToolTip toolTipButton = new ToolTip
             {
                 ShowAlways = true
             };
-            toolTip_button.ShowAlways = true;
-            toolTip_button.SetToolTip(button1, @"更新本机Hosts");
-            toolTip_button.SetToolTip(button2, @"从远程获取Hosts");
-            toolTip_button.SetToolTip(button3, @"查看本机Hosts");
+            toolTipButton.ShowAlways = true;
+            toolTipButton.SetToolTip(button1, @"更新本机Hosts");
+            toolTipButton.SetToolTip(button2, @"从远程获取Hosts");
+            toolTipButton.SetToolTip(button3, @"查看本机Hosts");
+            _toolStripStatusLabel1TextCallback = Change_toolStripStatusLabel1;
+            _textBox3Textcallback = Change_textbox3Text;
+            _comboBox1TextCallBack = Get_comboBox1Text;
+        }
+
+        private void Change_toolStripStatusLabel1(string str)
+        {
+             toolStripStatusLabel1.Text = str;
+        }
+
+        private void Change_textbox3Text(string str)
+        {
+            textBox3.Text = str;
+        }
+
+        private void Get_comboBox1Text()
+        {
+            _hostsAddress = comboBox1.Text;
         }
     }
 }
