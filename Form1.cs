@@ -156,6 +156,7 @@ namespace Change_Hosts
             _toolStripStatusLabel1TextCallback = Change_toolStripStatusLabel1;
             _textBox3Textcallback = Change_textbox3Text;
             _comboBox1TextCallBack = Get_comboBox1Text;
+            Get_local_hosts();
         }
 
         private void Change_toolStripStatusLabel1(string str)
