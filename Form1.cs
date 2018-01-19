@@ -30,7 +30,7 @@ namespace Change_Hosts
         {
             try
             {
-                var hosts = textBox3.Text;
+                var hosts = HostsBox.Text;
 
                 System.Text.UTF8Encoding utf8 = new System.Text.UTF8Encoding(false);
                 File.WriteAllText(LocalHostsAddress, hosts, utf8);
@@ -72,7 +72,7 @@ namespace Change_Hosts
         {
             _isreceiving = true;
             _toolStripStatusLabel1TextCallback?.Invoke(@"正在获取...");
-            textBox3?.Invoke(_textBox3Textcallback, @"");
+            HostsBox?.Invoke(_textBox3Textcallback, @"");
 
             
             comboBox1?.Invoke(_comboBox1TextCallBack);
@@ -80,7 +80,7 @@ namespace Change_Hosts
             var add = GetGeneralContent(_hostsAddress);
             if (add != "")
             {   
-                textBox3?.Invoke(_textBox3Textcallback, add);
+                HostsBox?.Invoke(_textBox3Textcallback, add);
 
                 string[] contentLines = add.Split(new []{ "\r\n" }, StringSplitOptions.None);
                 const string str1 = @"# Last updated: ";
@@ -101,7 +101,7 @@ namespace Change_Hosts
             else
             {
                 _toolStripStatusLabel1TextCallback?.Invoke(@"获取远程Hosts失败！请检查网络连接和HOSTS地址是否正确");
-                textBox3?.Invoke(_textBox3Textcallback, _hostsAddress);
+                HostsBox?.Invoke(_textBox3Textcallback, _hostsAddress);
             }
             _isreceiving = false;
         }
@@ -132,7 +132,7 @@ namespace Change_Hosts
         {
             try
             {
-                textBox2.Text = File.ReadAllText(path: LocalHostsAddress, encoding: Encoding.UTF8);
+                HostsBox.Text = File.ReadAllText(path: LocalHostsAddress, encoding: Encoding.UTF8);
                 toolStripStatusLabel1.Text = @"获取本地Hosts成功！";
             }
             catch
@@ -165,7 +165,7 @@ namespace Change_Hosts
 
         private void Change_textbox3Text(string str)
         {
-            textBox3.Text = str;
+            HostsBox.Text = str;
         }
 
         private void Get_comboBox1Text()
